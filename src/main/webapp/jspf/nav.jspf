@@ -1,0 +1,26 @@
+<nav class="navbar navbar-dark bg-primary">
+    <a class="navbar-brand" href="FrontController?action=Index">Início</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="FrontController?action=BuscarDominio">Busca</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="FrontController?action=AlterarContato"> Visualização <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="FrontController?action=LerContato">Equipes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="FrontController?action=ApagarContato">Documentação</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="FrontController?action=GravarEmpresa">Sobre</a>
+            </li>
+         
+        </ul>
+    </div>
+</nav>
