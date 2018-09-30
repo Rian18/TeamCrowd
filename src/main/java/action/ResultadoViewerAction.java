@@ -23,10 +23,9 @@ public class ResultadoViewerAction implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         List<Repositorio> lstRepositorio = new ArrayList<>();
         List<Colaborador> lstColaboradores = new ArrayList<>();
-        List<Colaborador> lstColaboradoresRETORNO = new ArrayList<>();
-        //String keyword = (String) request.getAttribute("palavraChave");
+       // String keyword = (String) request.getAttribute("palavraChave");
 
-        //lstRepositorio = RepositorioDAO.getINSTANCE().readAll("Ecossistema de Software");
+        //lstRepositorio = RepositorioDAO.getINSTANCE().readAll("Ecossistemas de Software");
         /*for (Repositorio repositorio : lstRepositorio) {
             lstColaboradores = ColaboradorDAO.getINSTANCE().readAll();
             for (Colaborador colaborador : lstColaboradores) {
@@ -36,20 +35,12 @@ public class ResultadoViewerAction implements Action {
 
             }
             lstColaboradores.clear();
-        }*/
+        }
         
-        lstColaboradores = ColaboradorDAO.getINSTANCE().readAll();
-            for (Colaborador colaborador : lstColaboradores) {
-                if (colaborador.getContribuicao() > 1) {
-                    lstColaboradoresRETORNO.add(colaborador);
-                }
-
-            }
-            lstColaboradores.clear();
-
-        request.setAttribute("colaboradores", lstColaboradoresRETORNO);
+        lstColaboradores = ColaboradorDAO.getINSTANCE().readAll(keyword);
+        request.setAttribute("colaboradores", lstColaboradores);
         RequestDispatcher despachante = request.getRequestDispatcher("/visualizaDados.jsp");
-        despachante.forward(request, response);
+        despachante.forward(request, response);*/
 
     }
 

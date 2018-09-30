@@ -77,20 +77,31 @@ public class ColaboradorDAO {
         return null;
     }
 
-    public List<Colaborador> readAll() throws ClassNotFoundException {
-        List<Colaborador> lstColaboradores = new ArrayList<>();
+    public List<Colaborador> readAll(String palavrachave) throws ClassNotFoundException {
+
+        List<Colaborador> lstColaboradores = new ArrayList<Colaborador>();
         Connection conn = null;
-        Statement st = null;
+        PreparedStatement stmt1 = null;
+        PreparedStatement stmt2 = null;
+     
         try {
             conn = DataBaseLocator.getInstance().getConnection();
-            String sql = "SELECT * FROM colaborador WHERE idColaborador = " ;
-            st = conn.createStatement();
-            ResultSet rd = st.executeQuery(sql);
-            if (rd.next()) {
-
-            lstColaboradores.add(new Colaborador(rd.getLong("idColaborador"), rd.getString("nome"), rd.getString("email"), rd.getInt("numContribuicoes"), rd.getInt("numSeguidores"), rd.getInt("numSeguidos"), rd.getString("localizacao"), rd.getString("urlImagem"), rd.getString("url")));   
+            String sql = "SELECT * FROM reposusuario WHERE palavrachave = ? " ;
+             String sql1 ="";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, palavrachave);
+            ResultSet rs = stmt1.executeQuery();
+            
+           
+            while (rs.next()) {  
+                sql1 = "SELECT * FROM usuario WHERE idUsuario = ? ";
+                stmt2 = conn.prepareStatement(sql1);
+                stmt2.setInt(1, (rs.getInt("id_Usuario")));
+                ResultSet rd = stmt2.executeQuery();
+                if (rd.next()) {
+                    lstColaboradores.add(new Colaborador(rd.getLong("idUsuario"), rd.getString("nome"), rd.getString("email"),rd.getString("login"),rd.getInt("contribuicao"), rd.getInt("num_Seguidores"), rd.getInt("num_Seguidos"), rd.getString("localizacao"), rd.getString("url"),rd.getString("avatar_url"),rd.getDate("criado_em")));
+                }
             }
-                
 
         } catch (SQLException ex) {
             Logger.getLogger(RepositorioDAO.class.getName()).log(Level.SEVERE, null, ex);
