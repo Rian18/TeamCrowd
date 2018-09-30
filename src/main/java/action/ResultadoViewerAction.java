@@ -24,11 +24,11 @@ public class ResultadoViewerAction implements Action {
         List<Repositorio> lstRepositorio = new ArrayList<>();
         List<Colaborador> lstColaboradores = new ArrayList<>();
         List<Colaborador> lstColaboradoresRETORNO = new ArrayList<>();
-        String keyword = (String) request.getAttribute("palavraChave");
+        //String keyword = (String) request.getAttribute("palavraChave");
 
-        lstRepositorio = RepositorioDAO.getINSTANCE().readAll(keyword);
-        for (Repositorio repositorio : lstRepositorio) {
-            lstColaboradores = ColaboradorDAO.getINSTANCE().readAll(repositorio.getId());
+        //lstRepositorio = RepositorioDAO.getINSTANCE().readAll("Ecossistema de Software");
+        /*for (Repositorio repositorio : lstRepositorio) {
+            lstColaboradores = ColaboradorDAO.getINSTANCE().readAll();
             for (Colaborador colaborador : lstColaboradores) {
                 if (colaborador.getContribuicao() > 1) {
                     lstColaboradoresRETORNO.add(colaborador);
@@ -36,10 +36,19 @@ public class ResultadoViewerAction implements Action {
 
             }
             lstColaboradores.clear();
-        }
+        }*/
+        
+        lstColaboradores = ColaboradorDAO.getINSTANCE().readAll();
+            for (Colaborador colaborador : lstColaboradores) {
+                if (colaborador.getContribuicao() > 1) {
+                    lstColaboradoresRETORNO.add(colaborador);
+                }
+
+            }
+            lstColaboradores.clear();
 
         request.setAttribute("colaboradores", lstColaboradoresRETORNO);
-        RequestDispatcher despachante = request.getRequestDispatcher("/WEB-INF/Informacoes.jsp");
+        RequestDispatcher despachante = request.getRequestDispatcher("/visualizaDados.jsp");
         despachante.forward(request, response);
 
     }

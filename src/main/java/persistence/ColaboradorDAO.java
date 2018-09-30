@@ -1,10 +1,13 @@
-
 package persistence;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,13 +15,13 @@ import java.util.logging.Logger;
 import model.Colaborador;
 import model.Repositorio;
 
-
 /**
  *
  * @author Rian Alves
  */
 public class ColaboradorDAO {
-     private static final ColaboradorDAO INSTANCE = new ColaboradorDAO();
+
+    private static final ColaboradorDAO INSTANCE = new ColaboradorDAO();
 
     public static ColaboradorDAO getINSTANCE() {
         return INSTANCE;
@@ -26,18 +29,28 @@ public class ColaboradorDAO {
 
     public void save(Colaborador colaborador) throws SQLException, ClassNotFoundException {
         Connection conn = null;
-        Statement st = null;
+        PreparedStatement stmt = null;
 
         try {
             conn = DataBaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            String sql = "INSERT into colaborador(idcolaborador,nome,email,numContribuicoes,numSeguidores,numSeguidos,localizacao,urlImagem,url) values (" 
-                    + colaborador.getIdColaborador() + ",'" + colaborador.getNome() + "','" + colaborador.getEmail() + "'," + colaborador.getContribuicao() + "," + colaborador.getNumseguidos() + "," + colaborador.getNumseguidores()+ ",'"  + colaborador.getLocalizacao() + "','"  + colaborador.getUrl() + "','"  + colaborador.getImagem_URL() + "')";
-            st.execute(sql);
+            String sql = "INSERT into usuario(idUsuario,nome,email,contribuicao,num_seguidores,num_seguidos,localizacao,avatar_url,url,criado_em) values (?,?,?,?,?,?,?,?,?,?)";
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, colaborador.getIdColaborador());
+            stmt.setString(2, colaborador.getNome());
+            stmt.setString(3, colaborador.getEmail());
+            stmt.setInt(4, colaborador.getContribuicao());
+            stmt.setInt(5, colaborador.getNumseguidores());
+            stmt.setInt(6, colaborador.getNumseguidos());
+            stmt.setString(7, colaborador.getLocal());
+            stmt.setString(8, colaborador.getImagem_URL());
+            stmt.setString(9, colaborador.getUrl());
+            stmt.setDate(10, (Date) colaborador.getCriado_em());
+            stmt.execute();
         } catch (SQLException e) {
             throw e;
         } finally {
-            closeResources(conn, st);
+            closeResources(conn, stmt);
         }
 
     }
@@ -53,7 +66,7 @@ public class ColaboradorDAO {
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
 
-                return new Colaborador(rs.getLong("idColaborador"), rs.getString("nome"), rs.getString("email"),rs.getInt("numContribuicoes"),rs.getInt("numSeguidos"),rs.getInt("numSeguidores"), rs.getString("localizacao"), rs.getString("url"), rs.getString("urlImagem"));
+                return new Colaborador(rs.getLong("idColaborador"), rs.getString("nome"), rs.getString("email"), rs.getInt("numContribuicoes"), rs.getInt("numSeguidos"), rs.getInt("numSeguidores"), rs.getString("localizacao"), rs.getString("url"), rs.getString("urlImagem"));
             }
 
         } catch (SQLException e) {
@@ -64,21 +77,20 @@ public class ColaboradorDAO {
         return null;
     }
 
-   public List<Colaborador> readAll(Long idRepositorio) throws ClassNotFoundException {
+    public List<Colaborador> readAll() throws ClassNotFoundException {
         List<Colaborador> lstColaboradores = new ArrayList<>();
+        Connection conn = null;
+        Statement st = null;
         try {
-            Connection conn = null;
-            Statement st = null;
-
             conn = DataBaseLocator.getInstance().getConnection();
-            String sql = "SELECT * FROM repocolab WHERE idRepositorio = '" + idRepositorio + "'";
+            String sql = "SELECT * FROM colaborador WHERE idColaborador = " ;
             st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            ResultSet rd = null;
-            if (rs.next()) {
-                rd = st.executeQuery("SELECT * FROM colaborador WHERE idColaborador = '" + rs.getLong("idColaborador") + "'");
-                lstColaboradores.add(new Colaborador(rd.getLong("idColaborador"), rd.getString("nome"), rd.getString("email"),rd.getInt("numContribuicoes"),rd.getInt("numSeguidos"),rd.getInt("numSeguidores"), rd.getString("localizacao"), rd.getString("url"), rd.getString("urlImagem")));
+            ResultSet rd = st.executeQuery(sql);
+            if (rd.next()) {
+
+            lstColaboradores.add(new Colaborador(rd.getLong("idColaborador"), rd.getString("nome"), rd.getString("email"), rd.getInt("numContribuicoes"), rd.getInt("numSeguidores"), rd.getInt("numSeguidos"), rd.getString("localizacao"), rd.getString("urlImagem"), rd.getString("url")));   
             }
+                
 
         } catch (SQLException ex) {
             Logger.getLogger(RepositorioDAO.class.getName()).log(Level.SEVERE, null, ex);

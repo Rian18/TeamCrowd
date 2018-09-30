@@ -23,7 +23,7 @@ public class DataBaseLocator {
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn
-                = DriverManager.getConnection("jdbc:mysql://localhost:3306/mineragit", "root", "");
+                = DriverManager.getConnection("jdbc:mysql://localhost:3306/formagrupo", "root", "");
         return conn;
     }
     

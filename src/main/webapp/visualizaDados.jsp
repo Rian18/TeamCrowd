@@ -40,9 +40,33 @@
     <br/>
 
     <div class="container-fluid">
-        
-        
-        
+        <div class="row">
+
+    <div class="col">  
+        <label for="origem" class="text-center font-weight-bold"> Todos os Colaboradores Encontrados </label>
+        <select class="custom-select" size="15" id="origem">
+            <c:forEach var="colaborador" items="${colaboradores}">
+                <option value="${colaborador.nome}">${colaborador.email} ( ${colaborador.contribuicao} ) </option>
+
+            </c:forEach>
+        </select>
+
+    </div>
+    <div class="col btn-group-vertical">
+
+        <button type="button" id="add" class="btn btn-primary" onclick="MoveListBoxItem('origem', 'destino', false)">Adicionar</button>
+        <button type="button" id="addAll" class="btn btn-primary" onclick="MoveListBoxItem('origem', 'destino', true)">Adicionar Todos</button>
+        <button type="button" id="remove" class="btn btn-danger" onclick="MoveListBoxItem('destino', 'origem', false)">Remover</button>
+        <button type="button" id="removeAll" class="btn btn-danger" onclick="MoveListBoxItem('destino', 'origem', true)">Remover Todos</button>
+    </div>
+    <div class="col">  
+        <form method="post">
+             </form>
+    </div>
+
+</div>
+
+<br/>
         
     </div>
      <%@include file="jspf/footer.jspf" %>

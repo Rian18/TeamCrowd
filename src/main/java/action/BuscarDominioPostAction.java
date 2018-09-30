@@ -27,9 +27,9 @@ public class BuscarDominioPostAction implements Action  {
             MineradorGit mineracao = new MineradorGit();
             mineracao.Busca(keyword);           
             //RequestDispatcher dispacher = request.getRequestDispatcher("/WEB-INF/Repositorio.jsp");
-           // request.setAttribute("palavraChave", keyword);
+           request.setAttribute("palavraChave", keyword);
             //dispacher.forward(request, response);
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("visualizaDados.jsp");
             
         } catch (SQLException ex) {
             Logger.getLogger(BuscarDominioPostAction.class.getName()).log(Level.SEVERE, null, ex);

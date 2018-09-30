@@ -1,6 +1,7 @@
 package br.ufjf.teamcrowd;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,25 +35,27 @@ public class MineradorGit {
         PagedIterable<GHRepository> repositorios = repos.list();
 
         for (GHRepository repositorio : repositorios) {
-
             //Salvar Repositorio no banco
+            java.util.Date dateRepo = repositorio.getCreatedAt();
+            java.sql.Date sqlDaterepo = new java.sql.Date(dateRepo.getTime());
+            
             Repositorio reposit = new Repositorio(repositorio.getId(), repositorio.getDescription(),
-                    repositorio.getFullName(), repositorio.getName(), repositorio.getUrl().toString(), keyword);
+                    repositorio.getFullName(), repositorio.getName(), repositorio.getLanguage(), repositorio.getUrl().toString(), repositorio.getStargazersCount(), repositorio.getWatchers(),sqlDaterepo);
             RepositorioDAO.getINSTANCE().save(reposit);
 
             PagedIterable<GHRepository.Contributor> colaboradores = repositorio.listContributors();
             for (GHRepository.Contributor colaboradore : colaboradores) {
-
-                Colaborador colab = new Colaborador(colaboradore.getId(), colaboradore.getName(), colaboradore.getEmail(), colaboradore.getContributions(),
-                        colaboradore.getFollowingCount(), colaboradore.getFollowersCount(), colaboradore.getLocation(), colaboradore.getUrl().toString(), colaboradore.getAvatarUrl());
-
+                java.util.Date dateCol = colaboradore.getCreatedAt();
+               java.sql.Date sqlDatecol = new java.sql.Date(dateCol.getTime());
+               
+                Colaborador colab = new Colaborador(colaboradore.getId(), colaboradore.getName(), colaboradore.getEmail(), colaboradore.getLogin(), colaboradore.getContributions(),
+                        colaboradore.getFollowersCount(), colaboradore.getFollowingCount(), colaboradore.getLocation(), colaboradore.getUrl().toString(), colaboradore.getAvatarUrl(),sqlDatecol );
                 ColaboradorDAO.getINSTANCE().save(colab);
-                ItemDAO.getINSTANCE().saveRepoColab(reposit, colab);
+                ItemDAO.getINSTANCE().saveReposusuario(reposit, colab, keyword);
                 for (GHUser seguidor : colaboradore.listFollowers()) {
-                    Seguidor seg = new Seguidor(seguidor.getId(), seguidor.getName(), seguidor.getEmail(), seguidor.getFollowingCount(),
-                            seguidor.getFollowersCount(), seguidor.getLocation(), seguidor.getUrl().toString(), seguidor.getAvatarUrl());
+                    Seguidor seg = new Seguidor(seguidor.getId(), colaboradore.getId(), seguidor.getName(), seguidor.getEmail(), seguidor.getLogin(), seguidor.getLocation(), seguidor.getUrl().toString(), seguidor.getAvatarUrl());
                     SeguidorDAO.getINSTANCE().save(seg);
-                    ItemDAO.getINSTANCE().saveColabSeguidor(seg, colab);
+
                 }
                 System.out.println("Outros dados: ");
             }

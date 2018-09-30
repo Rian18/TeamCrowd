@@ -2,33 +2,48 @@ package model;
 
 public class Seguidor {
 
+   
+
     private Long id;
+    private Long idSeguido;
     private String nome;
     private String email;
-    private int numseguidos;
-    private int numseguidores;
+    private String login;
     private String localizacao;
     private String url;
     private String imagem_URL;
 
-    public Seguidor(Long id, String nome, String email, int numseguidos, int numseguidores, String localizacao, String url, String imagem_URL) {
+    public Seguidor(Long id, Long idSeguidor, String nome, String email, String login, String localizacao, String url, String imagem_URL) {
         this.id = id;
+        this.idSeguido = idSeguidor;
         this.nome = nome;
         this.email = email;
-        this.numseguidos = numseguidos;
-        this.numseguidores = numseguidores;
+        this.login = login;
         this.localizacao = localizacao;
         this.url = url;
         this.imagem_URL = imagem_URL;
     }
 
-    public Long getId() {
+
+    
+     public Long getId() {
         return id;
     }
 
+   
     public void setId(Long id) {
         this.id = id;
     }
+    
+     public Long getIdSeguido() {
+        return idSeguido;
+    }
+
+   
+    public void setIdSeguido(Long idSeguido) {
+        this.idSeguido = idSeguido;
+    }
+  
 
     public String getNome() {
         return nome;
@@ -46,23 +61,7 @@ public class Seguidor {
         this.email = email;
     }
     
-        public int getNumseguidos() {
-        return numseguidos;
-    }
-
-    public void setNumseguidos(int numseguidos) {
-        this.numseguidos = numseguidos;
-    }
-
-    public int getNumseguidores() {
-        return numseguidores;
-    }
-
-    public void setNumseguidores(int numseguidores) {
-        this.numseguidores = numseguidores;
-    }
-
-    public String getLocalizacao() {
+       public String getLocalizacao() {
         return localizacao;
     }
 
@@ -88,4 +87,12 @@ public class Seguidor {
         this.imagem_URL = imagem_URL;
     }
 
+    
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
 }

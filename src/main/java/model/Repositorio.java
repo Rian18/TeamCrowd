@@ -1,28 +1,50 @@
 
 package model;
 
+
+
+import java.util.Date;
 import java.util.List;
 
 public class Repositorio {
-    
-    private long id; 
+  
+    private long idRepositorio; 
     private String description;
     private String fullName;
     private String name;
-    private String email;
+    private String linguagem;
     private String url;
-    private String palavraChave;
+    private int numEstrelas;
+    private int observadores;
+    private Date data_criacao;
     private List<Colaborador> colaboradores;
-    
-     public Repositorio(long id, String description, String fullName, String name, String url, String palavraChave) {
-        this.id = id;
+
+    public Repositorio(long idRepositorio, String description, String fullName, String name, String linguagem, String url, int numEstrelas, int observadores, Date data_criacao, List<Colaborador> colaboradores) {
+        this.idRepositorio = idRepositorio;
         this.description = description;
         this.fullName = fullName;
         this.name = name;
+        this.linguagem = linguagem;
         this.url = url;
-        this.palavraChave = palavraChave;}
-
+        this.numEstrelas = numEstrelas;
+        this.observadores = observadores;
+        this.data_criacao = data_criacao;
+        this.colaboradores = colaboradores;
+    }
     
+    public Repositorio(long idRepositorio, String description, String fullName, String name, String linguagem, String url, int numEstrelas, int observadores, Date data_criacao) {
+        this.idRepositorio = idRepositorio;
+        this.description = description;
+        this.fullName = fullName;
+        this.name = name;
+        this.linguagem = linguagem;
+        this.url = url;
+        this.numEstrelas = numEstrelas;
+        this.observadores = observadores;
+        this.data_criacao = data_criacao;
+      
+    }
+ 
     public List <Colaborador> getColaboradores() {
         return colaboradores;
     }
@@ -30,20 +52,7 @@ public class Repositorio {
     public void setColaboradores(List <Colaborador> colaboradores) {
         this.colaboradores = colaboradores;
     }
-   
-
-    
-
-    public Repositorio(long id,String description, String fullName, String name, String email,List<Colaborador> colaboradores,String url) {
-        this.id = id;
-        this.description = description;
-        this.fullName = fullName;
-        this.name = name;
-        this.email = email;
-        this.colaboradores = colaboradores;
-        this.url = url;
-    }
-
+ 
     public String getDescription() {
         return description;
     }
@@ -68,12 +77,12 @@ public class Repositorio {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLinguagem() {
+        return linguagem;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLinguagem(String linguagem) {
+        this.linguagem = linguagem;
     }
 
     public String getUrl() {
@@ -85,19 +94,38 @@ public class Repositorio {
     }
 
    
-    public long getId() {
-        return id;
+    public long getIdRepositorio() {
+        return idRepositorio;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdRepositorio(long idRepositorio) {
+        this.idRepositorio = idRepositorio;
     }
     
-    public String getPalavraChave() {
-        return palavraChave;
+    
+     public int getNumEstrelas() {
+        return numEstrelas;
     }
 
-    public void setPalavraChave(String palavraChave) {
-        this.palavraChave = palavraChave;
+    public void setNumEstrelas(int numEstrelas) {
+        this.numEstrelas = numEstrelas;
+    }
+    
+    
+    
+    public Date getData_criacao() {
+        return data_criacao;
+    }
+
+    public void setData_criacao(Date data_criacao) {
+        this.data_criacao = data_criacao;
+    }
+    
+     public int getObservadores() {
+        return observadores;
+    }
+
+    public void setObservadores(int observadores) {
+        this.observadores = observadores;
     }
 }

@@ -1,6 +1,8 @@
 package persistence;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,17 +22,27 @@ public class RepositorioDAO {
 
     public void save(Repositorio repositorio) throws SQLException, ClassNotFoundException {
         Connection conn = null;
-        Statement st = null;
+       PreparedStatement stmt = null;
 
         try {
             conn = DataBaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            String sql = "INSERT into repositorio(idrepositorio,description,fullname,namerep,url,palavraChave) values (" + repositorio.getId() + ",'" + repositorio.getDescription() + "','" + repositorio.getFullName() + "','" + repositorio.getName() + "','" + repositorio.getUrl() + "','" + repositorio.getPalavraChave() + "')";
-            st.execute(sql);
+            String sql = "INSERT into repositorio(idrepositorio,url,descricao,nome,nomeCompleto,linguagem,data_criacao,observadores,num_estrelas) values (?,?,?,?,?,?,?,?,?)";
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, repositorio.getIdRepositorio());
+            stmt.setString(2, repositorio.getUrl());
+            stmt.setString(3, repositorio.getDescription());
+            stmt.setString(4, repositorio.getName());
+            stmt.setString(5, repositorio.getFullName());
+            stmt.setString(6, repositorio.getLinguagem());
+            stmt.setDate(7, (Date) repositorio.getData_criacao());
+            stmt.setInt(8, repositorio.getObservadores());
+            stmt.setInt(9, repositorio.getNumEstrelas());
+            stmt.execute();
         } catch (SQLException e) {
             throw e;
         } finally {
-            closeResources(conn, st);
+            closeResources(conn, stmt);
         }
 
     }
@@ -46,7 +58,7 @@ public class RepositorioDAO {
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
 
-                return new Repositorio(rs.getLong("idrepositorio"), rs.getString("description"), rs.getString("fullname"), rs.getString("namerep"), rs.getString("url"), rs.getString("palavraChave"));
+                //return new Repositorio(rs.getLong("idrepositorio"), rs.getString("description"), rs.getString("fullname"), rs.getString("namerep"), rs.getString("url"),rs.getInt("numEstrelas"), rs.getString("palavraChave"));
             }
 
         } catch (SQLException e) {
@@ -57,7 +69,7 @@ public class RepositorioDAO {
         return null;
     }
 
-    public List<Repositorio> readAll(String palavraChave) throws ClassNotFoundException {
+   /* public List<Repositorio> readAll(String palavraChave) throws ClassNotFoundException {
         List<Repositorio> lstRepositorio = new ArrayList<>();
         try {
             Connection conn = null;
@@ -68,7 +80,7 @@ public class RepositorioDAO {
             st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
-                lstRepositorio.add(new Repositorio(rs.getLong("idrepositorio"), rs.getString("description"), rs.getString("fullname"), rs.getString("name"), rs.getString("url"), rs.getString("palavraChave")));
+                lstRepositorio.add(new Repositorio(rs.getLong("idrepositorio"), rs.getString("description"), rs.getString("fullname"), rs.getString("name"), rs.getString("url"),rs.getInt("numEstrelas"), rs.getString("palavraChave")));
             }
 
         } catch (SQLException ex) {
@@ -76,7 +88,7 @@ public class RepositorioDAO {
         }
 
         return lstRepositorio;
-    }
+    }*/
 
     private void closeResources(Connection conn, Statement st) {
         try {

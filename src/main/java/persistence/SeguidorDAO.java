@@ -2,7 +2,7 @@
 package persistence;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import model.Seguidor;
@@ -20,47 +20,32 @@ public class SeguidorDAO {
 
     public void save(Seguidor seguidor) throws SQLException, ClassNotFoundException {
         Connection conn = null;
-        Statement st = null;
+        PreparedStatement stmt = null;
 
         try {
             conn = DataBaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            String sql = "INSERT into seguidor(idSeguidor,nome,email,numSeguidores,numSeguidos,localizacao,url,urlImagem) values (" 
-                    + seguidor.getId() + ",'" + seguidor.getNome() + "','" + seguidor.getEmail() + "'," + seguidor.getNumseguidores() + "," + seguidor.getNumseguidos()+ ",'"  + seguidor.getLocalizacao() + "','"  + seguidor.getUrl() + "','"  + seguidor.getImagem_URL() + "')";
-            st.execute(sql);
+            String sql = "INSERT into seguidor(idUsuario,idSeguidor,nome,email,login,url,localizacao,avatar_url) values (?,?,?,?,?,?,?,?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, seguidor.getIdSeguido());
+            stmt.setLong(2, seguidor.getId());
+            stmt.setString(3, seguidor.getNome());
+            stmt.setString(4, seguidor.getEmail());
+            stmt.setString(5, seguidor.getLogin());
+            stmt.setString(6, seguidor.getUrl());
+            stmt.setString(7, seguidor.getLocalizacao());
+            stmt.setString(8, seguidor.getImagem_URL());
+            stmt.execute();
         } catch (SQLException e) {
             throw e;
         } finally {
-            closeResources(conn, st);
+            closeResources(conn, stmt);
         }
 
     }
 
-    public Seguidor read(long idSeguidor) throws ClassNotFoundException, SQLException {
-        Connection conn = null;
-        Statement st = null;
+     
 
-        try {
-            conn = DataBaseLocator.getInstance().getConnection();
-            String sql = "SELECT * FROM seguidor WHERE idSeguidir ='" + idSeguidor + "'";
-            st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            if (rs.next()) {
-
-                return new Seguidor(rs.getLong("idSeguidor"), rs.getString("nome"), rs.getString("email"),rs.getInt("numSeguidores"),rs.getInt("numSeguidos"), rs.getString("localizacao"), rs.getString("url"), rs.getString("urlImagem"));
-            }
-
-        } catch (SQLException e) {
-            throw e;
-        } finally {
-            closeResources(conn, st);
-        }
-        return null;
-    }
-
-  
-
-    private void closeResources(Connection conn, Statement st) {
+    private void closeResources(Connection conn, PreparedStatement st) {
         try {
             if (st != null) {
                 st.close();
