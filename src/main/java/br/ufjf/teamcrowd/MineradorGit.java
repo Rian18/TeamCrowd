@@ -48,12 +48,12 @@ public class MineradorGit {
                 java.util.Date dateCol = colaboradore.getCreatedAt();
                java.sql.Date sqlDatecol = new java.sql.Date(dateCol.getTime());
                
-                Colaborador colab = new Colaborador(colaboradore.getId(), colaboradore.getName(), colaboradore.getEmail(), colaboradore.getLogin(), colaboradore.getContributions(),
-                        colaboradore.getFollowersCount(), colaboradore.getFollowingCount(), colaboradore.getLocation(), colaboradore.getUrl().toString(), colaboradore.getAvatarUrl(),sqlDatecol );
+                Colaborador colab = new Colaborador(colaboradore.getId(),reposit.getIdRepositorio(), colaboradore.getName(), colaboradore.getEmail(), colaboradore.getLogin(), colaboradore.getContributions(),
+                        colaboradore.getFollowersCount(), colaboradore.getFollowingCount(), colaboradore.getLocation(), colaboradore.getHtmlUrl().toString(), colaboradore.getAvatarUrl(),sqlDatecol );
                 ColaboradorDAO.getINSTANCE().save(colab);
                 ItemDAO.getINSTANCE().saveReposusuario(reposit, colab, keyword);
                 for (GHUser seguidor : colaboradore.listFollowers()) {
-                    Seguidor seg = new Seguidor(seguidor.getId(), colaboradore.getId(), seguidor.getName(), seguidor.getEmail(), seguidor.getLogin(), seguidor.getLocation(), seguidor.getUrl().toString(), seguidor.getAvatarUrl());
+                    Seguidor seg = new Seguidor(seguidor.getId(), colaboradore.getId(),reposit.getIdRepositorio(), seguidor.getName(), seguidor.getEmail(), seguidor.getLogin(), seguidor.getLocation(), seguidor.getUrl().toString(), seguidor.getAvatarUrl());
                     SeguidorDAO.getINSTANCE().save(seg);
 
                 }

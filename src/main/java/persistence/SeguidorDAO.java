@@ -24,7 +24,7 @@ public class SeguidorDAO {
 
         try {
             conn = DataBaseLocator.getInstance().getConnection();
-            String sql = "INSERT into seguidor(idUsuario,idSeguidor,nome,email,login,url,localizacao,avatar_url) values (?,?,?,?,?,?,?,?)";
+            String sql = "INSERT into seguidor(idUsuario,idSeguidor,nome,email,login,url,localizacao,avatar_url,idRepositorio) values (?,?,?,?,?,?,?,?,?)";
             stmt = conn.prepareStatement(sql);
             stmt.setLong(1, seguidor.getIdSeguido());
             stmt.setLong(2, seguidor.getId());
@@ -34,6 +34,7 @@ public class SeguidorDAO {
             stmt.setString(6, seguidor.getUrl());
             stmt.setString(7, seguidor.getLocalizacao());
             stmt.setString(8, seguidor.getImagem_URL());
+            stmt.setLong(9, seguidor.getIdRepositorio());
             stmt.execute();
         } catch (SQLException e) {
             throw e;

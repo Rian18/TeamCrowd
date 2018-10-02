@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,6 +91,42 @@ public class RepositorioDAO {
 
         return lstRepositorio;
     }*/
+    
+        public List<Repositorio> readAll(String palavrachave) throws ClassNotFoundException {
+
+        List<Repositorio> lstRepositorios = new ArrayList<Repositorio>();
+      
+        Connection conn = null;
+        PreparedStatement stmt1 = null;
+        PreparedStatement stmt2 = null;
+     
+        try {
+            conn = DataBaseLocator.getInstance().getConnection();
+            String sql = "SELECT * FROM reposusuario WHERE palavrachave = ? " ;
+             String sql1 ="";
+            stmt1 = conn.prepareStatement(sql);
+            stmt1.setString(1, palavrachave);
+            ResultSet rs = stmt1.executeQuery();
+            
+           
+            while (rs.next()) {  
+                sql1 = "SELECT * FROM repositorio WHERE idRepositorio = ? ";
+                stmt2 = conn.prepareStatement(sql1);
+                stmt2.setInt(1, (rs.getInt("id_Repositorio")));
+                ResultSet rd = stmt2.executeQuery();
+                if (rd.next()) {
+                    lstRepositorios.add(new Repositorio(rd.getLong("idRepositorio"), rd.getString("descricao"), rd.getString("nomeCompleto"),rd.getString("nome"),rd.getString("linguagem"),rd.getString("url"),rd.getInt("num_estrelas"), rd.getInt("observadores"),rd.getDate("data_criacao")));
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RepositorioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+        return lstRepositorios;
+    }
+        
+        
 
     private void closeResources(Connection conn, Statement st) {
         try {

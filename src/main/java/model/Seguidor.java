@@ -2,10 +2,25 @@ package model;
 
 public class Seguidor {
 
+    /**
+     * @return the idRepositorio
+     */
+    public Long getIdRepositorio() {
+        return idRepositorio;
+    }
+
+    /**
+     * @param idRepositorio the idRepositorio to set
+     */
+    public void setIdRepositorio(Long idRepositorio) {
+        this.idRepositorio = idRepositorio;
+    }
+
    
 
     private Long id;
     private Long idSeguido;
+    private Long idRepositorio;
     private String nome;
     private String email;
     private String login;
@@ -13,9 +28,10 @@ public class Seguidor {
     private String url;
     private String imagem_URL;
 
-    public Seguidor(Long id, Long idSeguidor, String nome, String email, String login, String localizacao, String url, String imagem_URL) {
+    public Seguidor(Long id, Long idSeguidor, Long idRepositorio, String nome, String email, String login, String localizacao, String url, String imagem_URL) {
         this.id = id;
         this.idSeguido = idSeguidor;
+        this.idRepositorio = idRepositorio;
         this.nome = nome;
         this.email = email;
         this.login = login;

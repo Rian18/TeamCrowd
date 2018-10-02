@@ -78,7 +78,7 @@ public class ItemDAO {
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
 
-                return new Colaborador(rs.getLong("idColaborador"), rs.getString("nome"), rs.getString("email"), rs.getInt("numContribuicoes"), rs.getInt("numSeguidos"), rs.getInt("numSeguidores"), rs.getString("localizacao"), rs.getString("url"), rs.getString("urlImagem"));
+                return new Colaborador(rs.getLong("idColaborador"),rs.getLong("idRepositorio"), rs.getString("nome"), rs.getString("email"), rs.getInt("numContribuicoes"), rs.getInt("numSeguidos"), rs.getInt("numSeguidores"), rs.getString("localizacao"), rs.getString("url"), rs.getString("urlImagem"));
             }
 
         } catch (SQLException e) {

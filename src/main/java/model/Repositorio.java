@@ -6,7 +6,7 @@ package model;
 import java.util.Date;
 import java.util.List;
 
-public class Repositorio {
+public class Repositorio implements Comparable<Repositorio> {
   
     private long idRepositorio; 
     private String description;
@@ -127,5 +127,16 @@ public class Repositorio {
 
     public void setObservadores(int observadores) {
         this.observadores = observadores;
+    }
+
+    @Override
+    public int compareTo(Repositorio repositorio) {
+    if (this.numEstrelas > repositorio.getNumEstrelas()) {
+          return -1;
+     }
+     if (this.numEstrelas < repositorio.getNumEstrelas()) {
+          return 1;
+     }
+     return 0;   
     }
 }

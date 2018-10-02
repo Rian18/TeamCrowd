@@ -33,7 +33,7 @@ public class ColaboradorDAO {
 
         try {
             conn = DataBaseLocator.getInstance().getConnection();
-            String sql = "INSERT into usuario(idUsuario,nome,email,contribuicao,num_seguidores,num_seguidos,localizacao,avatar_url,url,criado_em) values (?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT into usuario(idUsuario,nome,email,contribuicao,num_seguidores,num_seguidos,localizacao,avatar_url,url,criado_em,idRepositorio) values (?,?,?,?,?,?,?,?,?,?,?)";
 
             stmt = conn.prepareStatement(sql);
             stmt.setLong(1, colaborador.getIdColaborador());
@@ -46,6 +46,7 @@ public class ColaboradorDAO {
             stmt.setString(8, colaborador.getImagem_URL());
             stmt.setString(9, colaborador.getUrl());
             stmt.setDate(10, (Date) colaborador.getCriado_em());
+            stmt.setLong(11, colaborador.getIdRepositorio());
             stmt.execute();
         } catch (SQLException e) {
             throw e;
@@ -66,7 +67,7 @@ public class ColaboradorDAO {
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
 
-                return new Colaborador(rs.getLong("idColaborador"), rs.getString("nome"), rs.getString("email"), rs.getInt("numContribuicoes"), rs.getInt("numSeguidos"), rs.getInt("numSeguidores"), rs.getString("localizacao"), rs.getString("url"), rs.getString("urlImagem"));
+                return new Colaborador(rs.getLong("idColaborador"),rs.getLong("idRepositorio"), rs.getString("nome"), rs.getString("email"), rs.getInt("numContribuicoes"), rs.getInt("numSeguidos"), rs.getInt("numSeguidores"), rs.getString("localizacao"), rs.getString("url"), rs.getString("urlImagem"));
             }
 
         } catch (SQLException e) {
@@ -99,7 +100,7 @@ public class ColaboradorDAO {
                 stmt2.setInt(1, (rs.getInt("id_Usuario")));
                 ResultSet rd = stmt2.executeQuery();
                 if (rd.next()) {
-                    lstColaboradores.add(new Colaborador(rd.getLong("idUsuario"), rd.getString("nome"), rd.getString("email"),rd.getString("login"),rd.getInt("contribuicao"), rd.getInt("num_Seguidores"), rd.getInt("num_Seguidos"), rd.getString("localizacao"), rd.getString("url"),rd.getString("avatar_url"),rd.getDate("criado_em")));
+                    lstColaboradores.add(new Colaborador(rd.getLong("idUsuario"),rd.getLong("idRepositorio"), rd.getString("nome"), rd.getString("email"),rd.getString("login"),rd.getInt("contribuicao"), rd.getInt("num_Seguidores"), rd.getInt("num_Seguidos"), rd.getString("localizacao"), rd.getString("url"),rd.getString("avatar_url"),rd.getDate("criado_em")));
                 }
             }
 
