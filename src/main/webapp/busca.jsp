@@ -10,29 +10,29 @@
 
 <%@include file="jspf/header.jspf" %>
 <style type="text/css">
-            .card {
-                box-shadow: 0 4px 8px 0 rgba(1,0,0,0.2);
-                transition: 0.3s;
-                width: 30%;
-                border-radius: 10px;
-            }
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(1,0,0,0.2);
+        transition: 0.3s;
+        width: 30%;
+        border-radius: 10px;
+    }
 
-            .card:hover {
-                box-shadow: 0 8px 16px 0 rgba(1,0,0,0.2);
-            }
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(1,0,0,0.2);
+    }
 
-            .container {
-                padding: 2px 16px;
-            }
-            
-            #imagemborda{
-                
-                border-radius:100px;
-            }   
-             
-              
-            
-        </style>
+    .container {
+        padding: 2px 16px;
+    }
+
+    #imagemborda{
+
+        border-radius:100px;
+    }   
+
+
+
+</style>
 <title> Team Crowd - Busca</title>
 </head>
 <body>
@@ -52,6 +52,13 @@
                 </div>
                 <div class="col">
                     <input class="form-control form-control-sm" type="text" placeholder="Insira aqui a palavra chave para sua busca" name="keyword"/> 
+                    <br/>
+                    <select class="form-control form-control-sm" name ="complexidade">
+                        <option selected>Escolha a Complexidade de seu Projeto</option>
+                        <option value= "5">Baixa</option> 
+                        <option value= "10">Média</option>
+                        <option value="15">Alta</option>
+                    </select>
                 </div>
                 <div class="col">
 
@@ -63,8 +70,8 @@
                 <div class="col"> 
                 </div>
                 <div class="col">
-                   <center> <button type="submit" class="btn btn-success btn-sm">Buscar</button>
-                       <button type="reset" class="btn btn-danger  btn-sm"/>Cancelar</button> </center>
+                    <center> <button type="submit" class="btn btn-success btn-sm">Buscar</button>
+                        <button type="reset" class="btn btn-danger  btn-sm"/>Cancelar</button> </center>
                     <br/>
                 </div>
                 <div class="col"> 

@@ -29,7 +29,7 @@ public class BuscarDominioPostAction implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         try {
             String keyword = request.getParameter("keyword");
-
+            int complexidade = Integer.parseInt(request.getParameter("complexidade"));
             MineradorGit mineracao = new MineradorGit();
             mineracao.Busca(keyword);
 
@@ -44,7 +44,7 @@ public class BuscarDominioPostAction implements Action {
 
             Collections.sort(lstColaboradores);
             List<Colaborador> lstColaboradoresSugeridos = new ArrayList<>();
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < complexidade; i++) {
                 lstColaboradoresSugeridos.add(lstColaboradores.get(i));
             }
             request.setAttribute("sugeridos", lstColaboradoresSugeridos);

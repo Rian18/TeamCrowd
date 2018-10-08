@@ -47,7 +47,7 @@ public class MineradorGit {
             for (GHRepository.Contributor colaboradore : colaboradores) {
                 java.util.Date dateCol = colaboradore.getCreatedAt();
                java.sql.Date sqlDatecol = new java.sql.Date(dateCol.getTime());
-               
+              
                 Colaborador colab = new Colaborador(colaboradore.getId(),reposit.getIdRepositorio(), colaboradore.getName(), colaboradore.getEmail(), colaboradore.getLogin(), colaboradore.getContributions(),
                         colaboradore.getFollowersCount(), colaboradore.getFollowingCount(), colaboradore.getLocation(), colaboradore.getHtmlUrl().toString(), colaboradore.getAvatarUrl(),sqlDatecol );
                 ColaboradorDAO.getINSTANCE().save(colab);
