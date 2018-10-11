@@ -99,7 +99,7 @@
                 <table class="table table-hover" >
                     <thead>
                         <tr class="table-primary">
-                            <td colspan="3">Colaboradores Sugeridos para a Formação de um Grupo</td>
+                            <td colspan="4">Suggested Collaborators for the Formation of a Group</td>
                         </tr> 
 
                     </thead>
@@ -130,8 +130,9 @@
                 <table class="table table-hover" >
                     <thead>
                         <tr class="table-primary">
-                            <td><center>Colaboradores relacionados ao Domínio</center></td>
-                    <th><center></center></th>
+                            <td colspan="4">Collaborators related to the Software Domain</td>
+
+                            <th><center></center></th>
                     <th><center></center></th>
                     <th><center></center></th>
                     </tr>
@@ -155,18 +156,28 @@
                 <table class="table table-hover" >
                     <thead>
                         <tr class="table-primary">
-                            <th><center>Repositórios relacionados ao domínio</center></th>
-                    <th><center></center></th>
-                    <th><center></center></th>
+                            <td colspan="2">Repositories related to the domain</td>
 
-                    </tr>
+                            <th><center></center></th>
+                            <th><center></center></th>
+                            <th><center></center></th>
+
+    </tr>
+                        
+                       
                     </thead>
                     <tbody>
+                         <tr class="table-primary">
+                            <th><center>Repository</center></th>
+                            <th><center>Language</center></th>
+                            <th><center><img src="imagens\star-icon.png" id="imagemborda" alt="Estrelas do Repositório" width="15" height="15"></center></th>
+
+                        </tr>
                         <c:forEach var="repositorio" items="${repositorios}">
                             <tr>
                                 <td><center><a href="${repositorio.url}" target="_blank">${repositorio.name}</center></td> 
-                        <td><center>${repositorio.linguagem}</center></td> 
-                        <td><center>${repositorio.numEstrelas}</center></td> 
+                                <td><center>${repositorio.linguagem}</center></td> 
+                                <td><center>${repositorio.numEstrelas}</center></td> 
 
                         </tr>
                     </c:forEach>
