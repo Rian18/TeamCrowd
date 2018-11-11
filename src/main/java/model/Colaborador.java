@@ -4,8 +4,12 @@ package model;
 
 
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import persistence.RepositorioDAO;
 
 public class Colaborador implements Comparable<Colaborador>{
 
@@ -187,6 +191,7 @@ public class Colaborador implements Comparable<Colaborador>{
     
     @Override
     public int compareTo(Colaborador colaborador) {
+        totalCommitsRepositorio();
       if (this.contribuicao > colaborador.getContribuicao()) {
           return -1;
      }
@@ -194,6 +199,11 @@ public class Colaborador implements Comparable<Colaborador>{
           return 1;
      }
      return 0;   
+    }
+    
+    public int totalCommitsRepositorio()
+    {
+        return 10;
     }
     
    

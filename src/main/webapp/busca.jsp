@@ -41,8 +41,8 @@
 
     <div class="container-fluid">
 
-        <center><h4>Encontre colaboradores para a formação de seu Time.</h4></center>
-        <center><h6>Você poderá inserir o domínio de seu projeto e assim encontrar pessoas capazes de te ajudar</h6></center>           
+        <center><h4>Find collaborators for the formation of your time.</h4></center>
+        <center><h6>You can enter the domain of your project and find people who can help you</h6></center>           
         <br/>
 
         <br/>
@@ -51,10 +51,10 @@
                 <div class="col">
                 </div>
                 <div class="col">
-                    <input class="form-control form-control-sm" type="text" placeholder="Insira aqui a palavra chave para sua busca" name="keyword"/> 
+                    <input class="form-control form-control-sm" type="text" placeholder="Enter keyword here for your search" name="keyword"/> 
                     <br/>
                     <select class="form-control form-control-sm" name ="complexidade">
-                        <option selected>Escolha a Complexidade de seu Projeto</option>
+                        <option selected>Choose the Complexity of Your Project</option>
                         <option value= "5">Baixa</option> 
                         <option value= "10">Média</option>
                         <option value="15">Alta</option>
@@ -70,8 +70,8 @@
                 <div class="col"> 
                 </div>
                 <div class="col">
-                    <center> <button type="submit" class="btn btn-success btn-sm">Buscar</button>
-                        <button type="reset" class="btn btn-danger  btn-sm"/>Cancelar</button> </center>
+                    <center> <button type="submit" class="btn btn-success btn-sm">Search</button>
+                        <button type="reset" class="btn btn-danger  btn-sm"/>Cancel</button> </center>
                     <br/>
                 </div>
                 <div class="col"> 

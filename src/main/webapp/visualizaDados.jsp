@@ -53,6 +53,7 @@
         var options = {
             title: 'Commits por Colaborador',
             is3D: true,
+            colors: ['#191970', '#ADD8E6']
         };
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
         chart.draw(data, options);
@@ -62,30 +63,81 @@
 </script>
 
 <script type="text/javascript">
-    var dados = <%=request.getAttribute("colaboradoresJson")%>;
-    google.charts.load("current", {packages: ["corechart"]});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawSeriesChart);
 
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Colaboradores');
-        data.addColumn('number', 'Seguidores');
+    function drawSeriesChart() {
+
+      var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Contribuidores');
+        data.addColumn('number', 'Commits');
+        data.addColumn('number', 'Followers');
+        data.addColumn('string', 'Region');
         $.each(dados, function (i, dados)
         {
             var nome = dados.nome;
+            var commits = dados.contribuicao;
             var seguidores = dados.numseguidores;
-            data.addRows([[nome, seguidores]]);
+            var local = dados.local;
+            data.addRows([[nome, commits,seguidores,local]]);
         });
-        var options = {
-            title: 'Quantidade de Seguidores por Colaborador',
-            is3D: true,
-        };
-        var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
-        chart.draw(data, options);
-    }
-    ;
+      var options = {
+        title: 'Correlation between number of followers,  ' +
+               'commits and location of contributors',
+        hAxis: {title: 'Commits'},
+        vAxis: {title: 'Number of Followers'},
+        bubble: {textStyle: {fontSize: 11}}
+      };
 
-</script>
+      var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+      chart.draw(data, options);
+    }
+    </script>
+
+
+
+  <script type="text/javascript">
+      var dados = <%=request.getAttribute("colaboradoresJson")%>;
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff);
+
+      function drawStuff() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Contribuidores');
+        data.addColumn('number', 'Commits');
+        data.addColumn('number', 'Followers');
+       
+        $.each(dados, function (i, dados)
+        {
+            var nome = dados.nome;
+            var commits = dados.contribuicao;
+            var seguidores = dados.numseguidores;
+            data.addRows([[nome, commits,seguidores]]);
+        });
+
+        var options = {
+          width: 800,
+          chart: {
+            title: 'Commits and Followers',
+            subtitle: 'data acquaintance'
+          },
+          bars: 'horizontal', // Required for Material Bar Charts.
+          series: {
+            0: { axis: 'Commits' }, // Bind series 0 to an axis named 'distance'.
+            1: { axis: 'Followers' } // Bind series 1 to an axis named 'brightness'.
+          },
+          axes: {
+            x: {
+              distance: {label: 'parsecs'}, // Bottom x-axis.
+              brightness: {side: 'top', label: 'apparent magnitude'} // Top x-axis.
+            }
+          }
+        };
+
+      var chart = new google.charts.Bar(document.getElementById('dual_x_div'));
+      chart.draw(data, options);
+    };
+    </script>
 <title> Team Crowd - Visualização dos Dados</title>
 </head>
 <body>
@@ -118,13 +170,20 @@
                 </table>
 
             </div>
-            <div class="col">
-                <center><div id="piechart" style="width: 500px; height:300px;"></div></center>
-                <center><div id="piechart2" style="width: 500px; height:300px;"></div></center>
-            </div>
+          
 
 
         </div>
+         <div class = "row">
+          <div class="col">
+                <center><div id="dual_x_div" style="width: 700px; height:500px;"></div></center>
+                
+            </div>
+             <div class="col">
+                
+                <center><div id="series_chart_div" style="width: 700px; height:500px;"></div></center>
+            </div>
+         </div>
         <div class = "row">
             <div class="col"> 
                 <table class="table table-hover" >
@@ -156,13 +215,8 @@
                 <table class="table table-hover" >
                     <thead>
                         <tr class="table-primary">
-                            <td colspan="2">Repositories related to the domain</td>
-
-                            <th><center></center></th>
-                            <th><center></center></th>
-                            <th><center></center></th>
-
-    </tr>
+                            <td colspan="3">Repositories related to the domain</td>
+                        </tr>
                         
                        
                     </thead>
